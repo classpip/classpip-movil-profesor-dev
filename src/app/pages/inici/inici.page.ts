@@ -100,16 +100,18 @@ export class IniciPage implements OnInit {
     } else if (juego.Tipo === 'Juego De Avatar') {
       this.sesion.TomaJuegoAvatar(juego);
       this.navCtrl.navigateForward('/juego-avatar');
-    } else if (juego.Tipo === 'Juego De Votación Uno A Todos') {
-      this.navCtrl.navigateForward('/juego-votacion-uno-atodos');
-    } else if (juego.Tipo === 'Juego De Votación Todos A Uno') {
-      this.navCtrl.navigateForward('/juego-votacion-todos-auno');
     } else if (juego.Tipo === 'Juego De Cuestionario de Satisfacción') {
         this.navCtrl.navigateForward('/juego-cuestionario-satisfaccion');
     } else if (juego.Tipo === 'Control de trabajo en equipo') {
       this.navCtrl.navigateForward('/control-de-trabajo');
     } else if (juego.Tipo === 'Evaluacion'){
       this.navCtrl.navigateForward('/juego-evaluacion');
+    } else if (juego.Tipo === 'Juego De Votación Uno A Todos') {
+      this.navCtrl.navigateForward('/juego-votaciones');
+    } else if (juego.Tipo === 'Juego De Votación Todos A Uno') {
+      this.navCtrl.navigateForward('/juego-votaciones');
+    } else if (juego.Tipo === 'Juego De Votación Votar opciones'){
+      this.navCtrl.navigateForward('/juego-votaciones');
     }else {
       this.navCtrl.navigateForward('/juego-colleccion');
     }

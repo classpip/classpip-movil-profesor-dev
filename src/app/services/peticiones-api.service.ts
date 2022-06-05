@@ -15,6 +15,8 @@ import {
   JuegoDeControlDeTrabajoEnEquipo, AlumnoJuegoDeControlDeTrabajoEnEquipo
   
 } from '../clases';
+
+import{EquipoJuegoDeVotacionUnoATodos} from 'src/app/clases/EquipoJuegoDeVotacionUnoATodos';
 import { AlumnoJuegoDeCuestionario } from '../clases/AlumnoJuegoDeCuestionario';
 import { Cuestionario } from '../clases/Cuestionario';
 import { Pregunta } from '../clases/Pregunta';
@@ -25,7 +27,8 @@ import { RespuestaJuegoDeCuestionario } from '../clases/RespuestaJuegoDeCuestion
 import * as URL from '../URLs/urls';
 import { EnfrentamientoTorneo } from '../clases/EnfrentamientoTorneo';
 import { AlumnoJuegoDeCompeticionTorneo } from '../clases/AlumnoJuegoDeCompeticionTorneo';
-
+import { AlumnoJuegoDeVotacionAOpciones } from 'src/app/clases/AlumnoJuegoDeVotacionAOpciones'
+import { JuegoDeVotacionAOpciones } from 'src/app/clases/JuegoDeVotacionAOpciones'
 @Injectable({
   providedIn: 'root'
 })
@@ -138,6 +141,8 @@ export class PeticionesAPIService {
 
   private APIUrlAlumnoJuegoDeControlDeTrabajoEnEquipo = this.base + '3000/api/alumnosJuegoDeControlDeTrabajoEnEquipo';
   private APIUrlJuegoDeControlDeTrabajoEnEquipo = this.base + '3000/api/juegosDeControlDeTrabajoEnEquipo';
+  private APIUrlEquipoJuegoDeVotacionUnoATodos  = this.base + '3000/api/equipoJuegosDeVotacionUnoATodos';
+  private APIUrlAlumnoJuegoDeVotacionAOpciones = this.base + '3000/api/juegosDeVotacionAOpciones';
 
   constructor(
     private http: HttpClient,
@@ -1500,5 +1505,43 @@ public PonerNotaAlumnoJuegoDeGeocaching(alumnoJuegoDeGeocaching: AlumnoJuegoDeGe
     // tslint:disable-next-line:max-line-length
     return this.http.put<EquipoJuegoDeCompeticionLiga>(this.APIUrlEquipoJuegoDeCompeticionLiga + '/' + ganadorJuegoDeCompeticionLiga.id, ganadorJuegoDeCompeticionLiga);
   }
+
+  public DameEquiposJuegoDeVotacionUnoATodos(juegoId: number): Observable<Equipo[]> {
+    return this.http.get<Equipo[]>(this.APIUrlJuegoDeVotacionUnoATodos + '/' + juegoId + '/equipos');
+  }
+
+  public DameInscripcionesEquipoJuegoDeVotacionUnoATodos(juegoId: number): Observable<EquipoJuegoDeVotacionUnoATodos[]> {
+    return this.http.get<EquipoJuegoDeVotacionUnoATodos[]>(this.APIUrlEquipoJuegoDeVotacionUnoATodos
+      + '?filter[where][juegoDeVotacionUnoATodosId]=' + juegoId);
+  }
+
+  public DameInscripcionesAlumnoJuegoDeVotacionAOpciones(juegoId: number): Observable<AlumnoJuegoDeVotacionAOpciones[]> {
+    return this.http.get<AlumnoJuegoDeVotacionAOpciones[]>(this.APIUrlAlumnoJuegoDeVotacionAOpciones
+      + '?filter[where][juegoDeVotacionAOpcionesId]=' + juegoId);
+  }
+
+  public ModificaInscripcionAlumnoJuegoDeVotacionUnoATodos(inscripcion: AlumnoJuegoDeVotacionUnoATodos): Observable<AlumnoJuegoDeVotacionUnoATodos> {
+    return this.http.put<AlumnoJuegoDeVotacionUnoATodos>(this.APIUrlAlumnoJuegoDeVotacionUnoATodos + '/' + inscripcion.id, inscripcion);
+  }
+
+  public ModificaInscripcionEquipoJuegoDeVotacionUnoATodos(inscripcion: EquipoJuegoDeVotacionUnoATodos): Observable<EquipoJuegoDeVotacionUnoATodos> {
+    return this.http.put<EquipoJuegoDeVotacionUnoATodos>(this.APIUrlEquipoJuegoDeVotacionUnoATodos + '/' + inscripcion.id, inscripcion);
+  }
+
+  public CambiaEstadoJuegoDeVotacionUnaATodos(juego: JuegoDeVotacionUnoATodos): Observable<JuegoDeVotacionUnoATodos> {
+    // tslint:disable-next-line:max-line-length
+    return this.http.put<JuegoDeVotacionUnoATodos>(this.APIUrlGrupos + '/' + juego.grupoId + '/juegoDeVotacionUnoATodos/' + juego.id, juego);
+  }
+
+  public CambiaEstadoJuegoDeVotacionTodosAUno(juego: JuegoDeVotacionTodosAUno): Observable<JuegoDeVotacionTodosAUno> {
+    // tslint:disable-next-line:max-line-length
+    return this.http.put<JuegoDeVotacionTodosAUno>(this.APIUrlGrupos + '/' + juego.grupoId + '/juegoDeVotacionTodosAUno/' + juego.id, juego);
+  }
+
+  public CambiaEstadoJuegoDeVotacionAOpciones(juego: JuegoDeVotacionAOpciones): Observable<JuegoDeVotacionAOpciones> {
+    // tslint:disable-next-line:max-line-length
+    return this.http.put<JuegoDeVotacionAOpciones>(this.APIUrlGrupos + '/' + juego.grupoId + '/juegoDeVotacionAOpciones/' + juego.id, juego);
+  }
+
   
 }
