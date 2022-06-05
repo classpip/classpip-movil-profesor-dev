@@ -183,6 +183,9 @@ export class PeticionesAPIService {
     return this.http.delete<JuegoDeEvaluacion>(this.APIURLJuegoDeEvaluacion + '/' + juegoId);
   }
 
+  public DameJuegosDeVotacionAOpciones(grupoId: number): Observable<JuegoDeVotacionAOpciones[]> {
+    return this.http.get<JuegoDeVotacionAOpciones[]>(this.APIUrlGrupos + '/' + grupoId + '/juegoDeVotacionAOpciones');
+  }
 
   public EnviarRespuestaAlumnosJuegoDeEvaluacion(relacionId: number, respuesta: any): Observable<AlumnoJuegoDeEvaluacion> {
     return this.http.patch<AlumnoJuegoDeEvaluacion>(this.APIURLAlumnoJuegoEvaluado + '/' + relacionId, respuesta);

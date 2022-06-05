@@ -2287,8 +2287,21 @@ export class CalculosService {
                                 }
                               }
 
-                              const resultado = { activos: juegosActivos, inactivos: juegosInactivos, preparados: juegosPreparados};
-                              obs.next (resultado);
+                              this.peticionesAPI.DameJuegosDeVotacionAOpciones(grupoID)
+                              .subscribe(juegosVotacionAOpciones => {
+                                for (let i = 0; i < juegosVotacionAOpciones.length; i++) {
+                                  if (juegosVotacionAOpciones[i].JuegoActivo === true) {
+                                    juegosVotacionAOpciones[i].Tipo = 'Juego De Votación Votar opciones';
+                                    juegosActivos.push(juegosVotacionAOpciones[i]);
+                                  } else {
+                                    juegosVotacionAOpciones[i].Tipo = 'Juego De Votación Votar opciones';
+                                    juegosInactivos.push(juegosVotacionAOpciones[i]);
+                                  }
+                                }
+
+                                const resultado = { activos: juegosActivos, inactivos: juegosInactivos, preparados: juegosPreparados};
+                                obs.next (resultado);
+                              });    
                             });
                           });
                         });
