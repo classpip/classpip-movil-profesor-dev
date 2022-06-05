@@ -233,7 +233,13 @@ export class ComServerService {
     });
   }
 
-
+  public EsperoRespuestasVotacionAOpciones(): any {
+    return Observable.create((observer) => {
+      this.servidor.on('respuestaVotacionAOpciones', (respuesta) => {
+        observer.next(respuesta);
+      });
+    });
+  }
 
 
 }
