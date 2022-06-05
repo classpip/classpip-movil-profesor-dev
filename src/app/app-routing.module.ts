@@ -55,6 +55,7 @@ const routes: Routes = [
   { path: 'juego-evaluacion', loadChildren: './pages/juego-evaluacion/juego-evaluacion.module#JuegoEvaluacionPageModule' },
   { path: 'asignacion-ganador', loadChildren: './pages/asignacion-ganador/asignacion-ganador.module#AsignacionGanadorPageModule' },
   { path: 'editar-puntuacion', loadChildren: './pages/editar-puntuacion/editar-puntuacion.module#EditarPuntuacionPageModule' },
+  { path: 'juego-votaciones', loadChildren: './pages/juego-votaciones/juego-votaciones.module#JuegoVotacionesPageModule' },
 ];
 
 @NgModule({

@@ -14,7 +14,7 @@ import {
 } from '../clases/index';
 
 import{EnfrentamientoTorneo} from 'src/app/clases/EnfrentamientoTorneo';
-
+import{TablaEquipoJuegoDeVotacionUnoATodos} from 'src/app/clases/TablaEquipoJuegoDeVotacionUnoATodos';
 // import { MatTableDataSource } from '@angular/material/table';
 // import { MiAlumnoAMostrarJuegoDePuntos } from '../clases/MiAlumnoAMostrarJuegoDePuntos';
 import { Observable, observable } from 'rxjs';
@@ -24,6 +24,7 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 import { MiAlumnoAMostrarJuegoDeCuestionario } from '../clases/MiAlumnoAMostrarJuegoDeCuestionario';
 import { AlumnoJuegoDeCuestionario } from '../clases/AlumnoJuegoDeCuestionario';
+import{EquipoJuegoDeVotacionUnoATodos} from 'src/app/clases/EquipoJuegoDeVotacionUnoATodos';
 import * as URL from '../URLs/urls';
 
 @Injectable({
@@ -2862,6 +2863,40 @@ public AsignarResultadosJornadaLiga(juego: Juego, jornadaId: number, resultados:
     }
   });
 }
+
+public PrepararTablaRankingEquipoVotacionUnoATodos(listaEquiposOrdenadaPorPuntos: EquipoJuegoDeVotacionUnoATodos[],
+                                                     equiposDelJuego: Equipo[]): TablaEquipoJuegoDeVotacionUnoATodos[] {
+    console.log (' EN CALCULOS');
+    console.log (listaEquiposOrdenadaPorPuntos);
+    const rankingJuegoDeVotacion: TablaEquipoJuegoDeVotacionUnoATodos [] = [];
+    // tslint:disable-next-line:prefer-for-oF
+    for (let i = 0; i < listaEquiposOrdenadaPorPuntos.length; i++) {
+      let equipo: Equipo;
+      const equipoId = listaEquiposOrdenadaPorPuntos[i].equipoId;
+      equipo = equiposDelJuego.filter(res => res.id === equipoId)[0];
+      // tslint:disable-next-line:max-line-length
+
+      const elem = new TablaEquipoJuegoDeVotacionUnoATodos(i + 1, equipo.Nombre, 0, equipoId);
+      rankingJuegoDeVotacion[i] = elem;
+    }
+
+    for (let i = 0; i < listaEquiposOrdenadaPorPuntos.length; i++) {
+      if (listaEquiposOrdenadaPorPuntos[i].Votos) {
+        // Este equipo ya ha votado
+        const equipo = listaEquiposOrdenadaPorPuntos[i];
+        // Asigno los puntos a los destinatorios
+        // tslint:disable-next-line:prefer-for-of
+        for (let j = 0; j < equipo.Votos.length; j++) {
+          const votado = rankingJuegoDeVotacion.filter (eq => eq.id === equipo.Votos[j].equipoId)[0];
+          votado.puntos = votado.puntos + equipo.Votos[j].puntos;
+        }
+        // Marque que el alumno ya ha votado
+        rankingJuegoDeVotacion.filter (eq => eq.id === equipo.equipoId)[0].votado = true;
+      }
+    }
+
+    return rankingJuegoDeVotacion;
+  }
 
 
 }
