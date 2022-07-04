@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import * as io from 'socket.io-client';
 import * as URL from '../URLs/urls';
 import { SesionService } from './sesion.service';
+import { EmailComposer } from '@ionic-native/email-composer/ngx';
 
 
 
@@ -105,6 +106,13 @@ export class ComServerService {
     // Me desconecto
     this.servidor.disconnect();
   }
+
+  public EnviarRecordatorio(email: string) {
+    this.servidor.connect();
+    this.servidor.emit ('enviarRecordatorio' , {email: email});
+    this.servidor.disconnect();
+  }
+  
   //Ejemplo Conexion con Servidor
   public EsperoRespuestasJuegoDeCuestionario (): any {
     return Observable.create((observer) => {

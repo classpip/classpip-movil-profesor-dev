@@ -223,6 +223,10 @@ export class PeticionesAPIService {
       + '&filter[where][Password]=' + password);
   }
 
+  public DameAlumnoEmail(nombreAlumno: string): Observable<Alumno> {
+    return this.http.get<Alumno>(this.APIUrlAlumnos + '?filter[where][Username]=' + nombreAlumno );
+  }
+
   public DameTodosLosAlumnos(): Observable<Alumno[]> {
     return this.http.get<Alumno[]>(this.APIUrlAlumnos);
   }

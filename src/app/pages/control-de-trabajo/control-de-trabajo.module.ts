@@ -7,7 +7,6 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { IonicModule } from '@ionic/angular';
 import { ControlDeTrabajoPage } from './control-de-trabajo.page';
 import { MatListModule } from '@angular/material/list';
-import { ExpandableComponent2 } from '../../../components/expandable2/expandable2.component';
 
 const routes: Routes = [
   {
@@ -26,6 +25,6 @@ const routes: Routes = [
     MatTableModule,
     MatListModule,
   ],
-  declarations: [ControlDeTrabajoPage, ExpandableComponent2]
+  declarations: [ControlDeTrabajoPage]
 })
 export class ControlDeTrabajoPageModule {}

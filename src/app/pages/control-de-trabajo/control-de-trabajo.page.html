@@ -8,7 +8,9 @@
 <ion-content>
 
   <div *ngIf = "tablaPreparada" style="width: 100%; overflow-x: auto;">
+    
     <h3 style= "text-align: center" >Haz click sobre el control que quieres examinar</h3>
+
         <table mat-table [dataSource]="dataSource"  style = "width: 100%;" >
   
                 <ng-container matColumnDef="equipo">
@@ -27,11 +29,8 @@
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        
         </table>
   </div>
-
-  <!--<ion-button (click)="enviarMail()" color="danger">Enviar mail</ion-button>-->
 
   <div style="display:flex; justify-content: center;">
     <ion-button (click)="hide()" color="primary">Más información</ion-button>
@@ -59,12 +58,15 @@
     </h2>
     <br>
     <div class="enFila">
-          <table mat-table [dataSource]="dataSourceControl"  style = "width: 50%" >
+          <table mat-table [dataSource]="dataSourceControl"  style = "width: 100%" >
                   <ng-container matColumnDef="alumno">
                     <th mat-header-cell class= "tituloColumnaTabla" *matHeaderCellDef>  </th>
                     <td mat-cell style= "text-align: left" *matCellDef="let alumno"> 
                       {{alumno.Nombre}} {{alumno.PrimerApellido}}
-                      <i class="material-icons" style = "color:green">forward</i>      
+
+                      <i (click)="EnviarEmail(alumno.Nombre);" class="material-icons" style = "color:blue">mail</i> 
+                      
+                      <i class="material-icons" style = "color:black">forward</i>      
                     </td>
                     <td mat-footer-cell *matFooterCellDef style= "text-align: left; font-size:large; font-weight: bold ;"> Total </td>
                   </ng-container>
@@ -81,10 +83,9 @@
 
                   <tr mat-header-row *matHeaderRowDef="displayedColumnsControl"></tr>
                   <tr mat-row *matRowDef="let row; columns: displayedColumnsControl;"></tr>
-                  <tr mat-footer-row *matFooterRowDef="displayedColumnsControl"></tr>
-               
-          
+                  <tr mat-footer-row *matFooterRowDef="displayedColumnsControl"></tr>  
           </table>
+
           <div style = "width: 50%; padding-left: 10%;">
             <p style= "text-align: center; font-size:x-large; font-weight: bold ;"> Comentarios </p>
             <mat-list>
