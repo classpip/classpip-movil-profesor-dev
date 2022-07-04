@@ -4,7 +4,7 @@ import { SesionService, PeticionesAPIService, CalculosService, ComServerService 
 import { Location } from '@angular/common'; 
 import {MatTableDataSource} from '@angular/material/table';
 import Swal from 'sweetalert2';
-import { Inject } from '@angular/core';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-control-de-trabajo',
@@ -44,6 +44,8 @@ export class ControlDeTrabajoPage implements OnInit {
     public peticionesAPI: PeticionesAPIService,
     public calculos: CalculosService,
     private location: Location,
+    public alertController: AlertController,
+    private comServer: ComServerService,
   ) {}
 
   ngOnInit() {
@@ -73,7 +75,6 @@ export class ControlDeTrabajoPage implements OnInit {
         alumnos: alumnosEquipo
       });
       cont++;
-      //console.log('Posicion Nombre:' + this.equipos[0].Nombre)
       if (cont === this.equipos.length) {
         this.dataSource = new MatTableDataSource (this.equiposConAlumnos);
         this.tablaPreparada = true;
@@ -178,16 +179,6 @@ export class ControlDeTrabajoPage implements OnInit {
     console.log('control terminado: '+ this.controlTerminado)
   }
 
-  hide() {
-    this.hideMe = !this.hideMe;
-  }
-
-  hide1(id: number) {
-    
-    this.indexHidden = id
-    console.log("id: "+ id)
-  }
-
 
   PreparaDatosDelControl (i: number, idEquipo: number, alumnosEquipo: any) {
     // Prepara las puntuaciones y los comentarios de los alumnos del equipo identificado al contestar el control i
@@ -237,6 +228,27 @@ export class ControlDeTrabajoPage implements OnInit {
     this.dataSourceControl = new MatTableDataSource (alumnosEquipo);
     this.tablaControlPreparada = true;
 
+  }
+
+  async EnviarEmail(nombreAlumno: string) {
+    this.peticionesAPI.DameAlumnoEmail (nombreAlumno)
+    .subscribe (async (res) => {
+      if (res[0] !== undefined) {
+        const email = res[0].Email;
+        this.comServer.EnviarRecordatorio(email);
+        const alert = await this.alertController.create({
+          header: 'Recordatorio enviado',
+          buttons: ['OK']
+        });
+        await alert.present();
+      } else {
+        const alert = await this.alertController.create({
+          header: 'No hay ningun alumno con este email',
+          buttons: ['OK']
+        });
+        await alert.present();
+      }
+    });
   }
 
   Suma (i) {

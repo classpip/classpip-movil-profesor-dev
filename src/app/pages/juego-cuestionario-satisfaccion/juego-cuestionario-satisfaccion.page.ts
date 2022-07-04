@@ -82,58 +82,6 @@ export class JuegoCuestionarioSatisfaccionPage implements OnInit {
       }
     });
     this.afirmaciones = [];
-    this.datosGrafico = [];
-
-
-    for ( i = 0; i < this.respuestasAfirmaciones.length; i++) {
-      const media =  this.respuestasAfirmaciones[i] / this.numeroRespuestas;
-      this.afirmaciones.push ({
-        Texto: this.cuestionario.Afirmaciones[i],
-        Media: media
-      });
-      this.datosGrafico.push ( [this.cuestionario.Afirmaciones[i], media]);
-    }
-
-
-    this.datosGrafico = [['afirmaciones', 'media']].concat(this.datosGrafico.reverse());
-
-    console.log ('datos para grafico');
-    console.log (this.datosGrafico);
-
-
-    this.grafico = {
-      dataset: {
-          source: this.datosGrafico,
-      },
-      grid: {containLabel: true},
-      xAxis: {name: 'media', min: 1, max: 5},
-      yAxis: {type: 'category'},
-      visualMap: {
-          orient: 'horizontal',
-          left: 'center',
-          min: 1,
-          max: 5,
-          text: ['High Score', 'Low Score'],
-          // Map the score column to color
-          dimension: 1,
-          inRange: {
-              color: ['#FFF633', '#33FF49']
-          }
-      },
-      series: [
-          {
-              type: 'bar',
-              encode: {
-                  // Map the "amount" column to X axis.
-                  x: 'media',
-                  // Map the "product" column to Y axis
-                  y: 'afirmacion'
-              }
-          }
-      ]
-    };
-
-
   }
 
   doCheck() {
